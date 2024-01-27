@@ -141,6 +141,6 @@ CORS_ORIGIN_WHITELIST = [
 CORS_ALLOW_CREDENTIALS = True
 
 try:
-    from .local_settings import *
+    from ..local_settings import *
 except ImportError:
     pass
