@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'recruiting.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'ssl',
+        'NAME': 'apply',
         'USER': 'root',
         'PASSWORD': config('db_password'),
         'HOST': 'mysql_db',
