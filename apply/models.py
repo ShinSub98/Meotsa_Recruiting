@@ -8,3 +8,4 @@ class Application(models.Model):
     q_1 = models.TextField(default = "")
     q_2 = models.TextField(default = "")
     q_3 = models.TextField(default = "")
+    applied_at = models.DateTimeField(auto_now_add = True, null = True)
