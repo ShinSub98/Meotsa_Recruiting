@@ -3,14 +3,14 @@ services:
   web:
     image: apply/server
     container_name: web
-		command: bash -c "
-      while ! nc -z mysql_db 3306; do sleep 1; done # db가 활성화 될 때까지 대기
-      && python manage.py makemigrations
-      && python manage.py migrate
-      && gunicorn ssl_project.wsgi:application -b 0.0.0.0:8000" # 서버 실행
+    command: bash -c "
+      while ! nc -z mysql_db 3306; do sleep 1; done && 
+      python manage.py makemigrations &&
+      python manage.py migrate &&
+      gunicorn ssl_project.wsgi:application -b 0.0.0.0:8000" # 서버 실행
     ports:
       - "8000:8000"
-		restart: always
+    restart: always
     volumes:
       - .:/app
       - ./static:/app/static
@@ -25,7 +25,7 @@ services:
     volumes:
       - ./nginx.default.conf:/etc/nginx/conf.d/default.conf
       - ./static:/static
-		restart: unless-stopped
+    restart: unless-stopped
     ports:
       - "80:80"
     depends_on:
@@ -45,6 +45,9 @@ services:
       - "3305:3306"
     networks:
       - server
+
+networks:
+  server:
 
 volumes:
   database:
