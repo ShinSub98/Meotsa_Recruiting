@@ -1,4 +1,5 @@
-from rest_framework.generics import ListCreateAPIView, DestroyAPIView
+from rest_framework.generics import ListCreateAPIView
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import ApplicationSerializer
 from .models import Application
@@ -27,13 +28,14 @@ class ApplyView(ListCreateAPIView):
         }
         return Response(res, status = status.HTTP_200_OK)
 
-class DelApplication(DestroyAPIView):
-    queryset = Application.objects.all()
-    def delete(self, request, pk, *args, **kwargs):
-        apply = ApplicationSerializer(Application.objects.get(pk = pk))
-        response = super().delete(request, *args, **kwargs)
+class DelApplication(APIView):
+    def delete(self, request, pk):
+        application = Application.objects.get(pk = pk)
+        data = ApplicationSerializer(application).data
+        application.delete()
+
         res = {
             "msg" : "지원서 삭제 성공",
-            "data" : apply.data
+            "data" : data
         }
         return Response(res, status=status.HTTP_204_NO_CONTENT)
